@@ -1,0 +1,153 @@
+﻿@model EmployeeD.Models.EmployeeModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2> Index </h2>
+
+
+<div class="container">
+    <div class="row">
+
+        @(Html.Kendo().Grid<EmployeeD.Models.EmployeeModel>()
+          .Name("EmpGrid")
+          .Selectable()
+          .HtmlAttributes(new { style = "height:100px;" })
+          .Resizable(resize => resize.Columns(true))
+          .Columns(columns =>
+          {
+              columns.Bound(c => c.Id).Width(100).Title("Id");
+              columns.Bound(c => c.FirstName).Width(120).Title("FirstName");
+              columns.Bound(c => c.LastName).Width(100).Title("LastName");
+              columns.Bound(c => c.Email).Width(100).Title("Email");
+              
+
+
+
+
+
+
+
+
+            columns.ForeignKey(c => c.Designation1, Model.TblList, "Id", "Designation1").EditorTemplateName("Designation").Title("Designation").HtmlAttributes(new { @Class = "borderinputblack" }).Width(200).Sortable(false);
+            //columns.ForeignKey(c => c.InventoryTypeId, Model.GetInventroyTypeList, "TypeId", "TypeName").EditorTemplateName("_InventoryTypeDropDownList").HtmlAttributes(new { @class = "borderinputblack" }).Title("Pack Size").Width(150).Sortable(false);
+
+
+
+
+              columns.Command(command =>
+              {
+                  command.Edit();
+                  command.Destroy();
+              }).Width(200);
+          })
+
+          .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model=>
+          {
+              model.Id(student => student.Id);
+              model.Field(student => student.Id).Editable(false);
+          }
+          )
+          .Read(read => read.Action("GetAllEmployee", "Employee"))
+          .Create(create => create.Action("AddEmployee", "Employee"))
+          .Update(update => update.Action("UpdateEmployee", "Employee"))
+          .Destroy(destroy => destroy.Action("DeleteEmployee", "Employee"))
+          )
+
+
+
+          .ToolBar(toolbar => toolbar.Create())
+
+          // Set grid editable.
+          .Editable(editable => editable.Mode(GridEditMode.InLine))
+
+          //.Events(evnts => evnts.DataBound("ColorMeBad"))
+
+
+          //.EditSettings(edit => { edit.AllowAdding().AllowDeleting().AllowEditing().EditMode(EditMode.InlineFormTemplate).InlineFormTemplateID("#template"); })
+
+          // Set grid sortable.
+          .Sortable()
+
+          // Set grid selectable.
+          .Selectable()
+
+          // Set grid pagable.
+          .Pageable(pageable =>
+          {
+
+              pageable.Refresh(true);
+              pageable.PageSizes(true);
+
+
+              //pageable.PageSizes((new[] { 4, 8,12}));
+
+          })
+        )
+
+
+     
+@*<div class="col-md-12">
+
+    @(Html.Kendo().Window().Name("AddDetails")
+              .Title("Add Employee")
+                    .Visible(false)
+                 .Modal(true)
+                   .Content(@<text>
+                       <div style="width:100%;" id="fieldlist">
+
+                         <form id="Addform">
+                    <div id="save-container">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                @Html.Label("FirstName :", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-6">
+                                @(Html.Kendo().TextBox()
+                             .Name("txtName")
+                             .HtmlAttributes(new { placeholder = "Enter Name", required = "required", validationmessage = "*", maxlength = "50", @class = "col-sm-2 form-control", style = "width: 100%", })
+                                )
+                            </div>
+                            <div class="col-md-6">
+                                @Html.Label("LastName :", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-6">
+                                @(Html.Kendo().TextBox()
+                             .Name("txtSalary")
+                             .HtmlAttributes(new { placeholder = "Enter Name", required = "required", validationmessage = "*", maxlength = "50", @class = "col-sm-2 form-control", style = "width: 100%" })
+                                )
+                            </div>
+                             <div class="col-md-6">
+                                @Html.Label("Email :", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                             <div class="col-md-6">
+                                @(Html.Kendo().TextBox()
+                             .Name("txtSalary")
+                             .HtmlAttributes(new { placeholder = "Enter Name", required = "required", validationmessage = "*", maxlength = "50", @class = "col-sm-2 form-control", style = "width: 100%" })
+                                )
+                            </div>
+
+                        </div>
+                        <div class="clarfix" style="height:35px"></div>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                @Html.Label("Designation :", htmlAttributes: new { @class = "control-label" })
+                            </div>*@
+
+                          
+          </div>
+    </div>
+
+                        @*</div>
+
+                     </div>
+
+                </form>
+
+            </div>
+
+        </text>))
+</div>*@
+
